@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <!-- Meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- External CSS -->
+        <link rel="stylesheet" href="css/forums.css">
+
+         <!--External JavaScript-->
+        <script type="text/javascript" src="js/index.js"></script>
+
+        <title>Shomi | Forums</title>
+
+    </head>
+
+    <body onLoad="readCookie();searchEvents();">
+
+        <div class="bg">
+            <!-- Navigation Bar -->
+            <ul class="nav-bar">
+                <li><button onclick="logout()">Log out</button></li>
+                <li><button id="addUniversity-btn">Add University<button></li>
+                <li><a></a></li>
+                <li><a></a></li>
+                <li><button id="createEvent-btn">Create Event</button></li>
+                <li><a></a></li>
+                <li><a></a></li>
+                <li><button id="joinRSO-btn">Join RSO</button></li>
+                <li><button id="createRSO-btn">Create RSO</button></li>
+            </ul>
+
+            <span id="eventSearchResult"></span>
+
+            <!-- Search Bar -->
+            <div class="search">
+                <input id="searchInput" class="searchbar" type="search" placeholder="Search for Events..." aria-label="Search"/>
+                <button class="btn-search" type="submit" onclick="searchEvents();">Search</button>
+            </div>
+
+            <!-- Events -->
+            <span id="eventBody"></span>
+
+            <!-- Add Event Modal -->
+            <div id="eventModal" class="event-modal">
+                <div class="modal-content">
+                    <h1>Create Event</h1>
+                    <span class="close">Exit</span>
+                    <input id = "EventName" type="text" class="input-field" placeholder="Event Name" required>
+                    <div class="event-data">
+                        <input id = "Time" type="text" class="input-field" placeholder="Time" required>
+                        <input id = "Date" type="text" class="input-field" placeholder="Date" required>
+                        <input id = "PhoneNumber" type="text" class="input-field" placeholder="Phone Number" required>
+                        <input id = "Email" type="text" class="input-field" placeholder="Email" required>
+                    </div>
+                    <input id = "Desc" type="text" class="input-field" placeholder="Description" required>
+
+                    <div class="dropdown-content" >
+                        <p>Select Category</p>
+                        <select required id="Category" multiple>
+                        </select>
+                    </div>
+
+                    
+                    <button type="button" class="createEvent-btn" onclick="createSchoolEvent()">Create</button>
+                    <br> <br>
+                    <span id="createEventResult"></span>
+                </div>
+            </div>
+
+            <!-- Add University Modal -->
+            <div id="universityModal" class="university-modal">
+                <div class="modal-content">
+                    <h1>Add University</h1>
+                    <span class="close">Exit</span>
+                    <input id = "UniName" type="text" class="input-field" placeholder="University Name (Enter as Acronym. Ex: 'UCF')" required>
+                    <input id = "sCount" type="number" class="input-field" placeholder="Student Count" required>
+                    <input id = "State" type="text" class="input-field" placeholder="State" required>
+                    <input id = "UniDesc" type="text" class="input-field" placeholder="Description" required>
+
+                    <button type="button" class="addUniversity-btn" onclick="addUniversity()">Add</button>
+                    <br> <br>
+                    <span id="createUniResult"></span>
+                </div>
+            </div>
+
+            <!-- Create RSO Modal -->
+            <div id="createRSOModal" class="createRSO-modal">
+                <div class="modal-content">
+                    <h1>Create RSO</h1>
+                    <span class="close">Exit</span>
+                    <input id = "RSOName" type="text" class="input-field" placeholder="RSO Name" required>
+
+                    <button type="button" class="createRSO-btn" onclick="createRSO()">Create</button>
+                    <br> <br>
+                    <span id="createRSOResult"></span>
+                    
+                </div>
+            </div>
+
+            <!-- Join RSO Modal -->
+            <div id="joinRSOModal" class="joinRSO-modal">
+                <div class="modal-content">
+                    <h1>Join RSO</h1>
+                    <span class="close">Exit</span>
+            
+                    <div class="rso-lists" >
+                        <select required id="RSO" multiple>
+                            <option value="" disabled>Select an RSO</option>
+                        </select>
+                    </div>
+                    
+                    <button type="button" class="joinRSO-btn" onclick="joinRSO()">Join</button>
+                    <br> <br>
+                    <span id="joinRSOResult"></span>
+                    
+                </div>
+            </div>
+
+            <!-- Comments Modal -->
+            <div id="commentsModal" class="comments-modal">
+                <div class="modal-content">
+                    <h1>Comments</h1>
+                    <span class="close">Exit</span>
+
+                    <div class="rating-list">
+                        <select required id="Stars" multiple>
+                            <option value="" disabled>Select a Rating</option>
+                            <option value="5 Stars">5 Stars</option>
+                            <option value="4 Stars">4 Stars</option>
+                            <option value="3 Stars">3 Stars</option>
+                            <option value="2 Stars">2 Stars</option>
+                            <option value="1 Star">1 Star</option>
+                        </select>
+                    </div>
+
+                    <input id = "createComment" type="text" class="input-field" placeholder="Write a Comment" required>
+
+                    <span id="postCommentResult"></span>
+
+                    <!-- Comments -->
+                    <span id="Comments"></span>
+                    
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+
+            //University Modal
+            var universityModal = document.getElementById("universityModal");
+            var addUniversityBtn = document.getElementById("addUniversity-btn");
+
+            //Event Modal
+            var eventModal = document.getElementById("eventModal");
+            var createEventBtn = document.getElementById("createEvent-btn");
+
+            //Create RSO Modal
+            var createRSOModal = document.getElementById("createRSOModal");
+            var createRSOBtn = document.getElementById("createRSO-btn");
+
+            //Join RSO Modal
+            var joinRSOModal = document.getElementById("joinRSOModal");
+            var joinRSOBtn = document.getElementById("joinRSO-btn");
+
+            //Comments Modal
+            var commentsModal = document.getElementById("commentsModal");
+
+            var close0 = document.getElementsByClassName("close")[0];
+            var close1 = document.getElementsByClassName("close")[1];
+            var close2 = document.getElementsByClassName("close")[2];
+            var close3 = document.getElementsByClassName("close")[3];
+            var close4 = document.getElementsByClassName("close")[4];
+
+            createEventBtn.onclick = function(){
+                eventModal.style.display = "block";
+                document.getElementById("Category").options.add(new Option("Public"));
+                document.getElementById("Category").options.add(new Option("University"));
+                populateUserRSO();
+            }
+
+            addUniversityBtn.onclick = function(){
+                universityModal.style.display = "block";
+            }
+
+            createRSOBtn.onclick = function(){
+                createRSOModal.style.display = "block";
+            }
+
+            joinRSOBtn.onclick = function(){
+                joinRSOModal.style.display = "block";
+                populateUnjoinedRSO();
+            }
+
+            close0.onclick = function(){
+                //Event Modal
+                eventModal.style.display = "none";
+                document.getElementById("createEventResult").innerHTML = "";
+                clearCreateEventFields();
+                document.getElementById("Category").innerHTML = "";
+            }  
+            
+            close1.onclick = function(){
+                //University Modal
+                universityModal.style.display = "none";
+            }
+
+            close2.onclick = function(){
+                //Create RSO Modal
+                createRSOModal.style.display = "none";
+            }
+
+            close3.onclick = function(){
+                //Join RSO Modal
+                joinRSOModal.style.display = "none";
+            }
+
+            close4.onclick = function(){
+                //Comments Modal
+                commentsModal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                //Event Modal
+                if (event.target == eventModal) {
+                    eventModal.style.display = "none";
+                    document.getElementById("createEventResult").innerHTML = "";
+                    clearCreateEventFields();
+                    document.getElementById("Category").innerHTML = "";
+                }
+
+                //University Modal
+                if (event.target == universityModal) {
+                    universityModal.style.display = "none";
+                    document.getElementById("createUniResult").innerHTML = "";
+                    clearAddUniversityFields();
+                }
+
+                //Create RSO Modal
+                if (event.target == createRSOModal) {
+                    createRSOModal.style.display = "none";
+                    document.getElementById("RSOName").value = "";
+                    document.getElementById("createRSOResult").innerHTML = "";
+                }
+
+                //Join RSO Modal
+                if (event.target == joinRSOModal) {
+                    joinRSOModal.style.display = "none";
+                    document.getElementById("joinRSOResult").innerHTML = "";
+                    document.getElementById("RSO").innerHTML = "";
+                }
+
+                //Comments Modal
+                if (event.target == commentsModal) {
+                    commentsModal.style.display = "none";
+                }
+
+            }
+        </script>
+
+    </body>
+</html>

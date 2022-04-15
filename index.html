@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head> 
+
+        <!-- Meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- External CSS -->
+        <link rel="stylesheet" href="css/home.css">
+
+        <title>Shomi</title>
+
+    </head>
+
+    <body onLoad="populateUnis();"> 
+        <div class="bg">
+
+            <div class="title">
+                <h1>SHOMI</h1>
+            </div>
+            <div class="form-box">
+
+                <div class="social-icons" onclick="window.location.href='//www.cs.ucf.edu/'">
+                    <img src="images/ucf.png">
+                </div>
+
+                <div class="button-box">
+                    <div id="btn"></div>
+                    <button type="button" class="toggle-btn" onclick="loginTransition()"> Sign In </button>
+                    <button type="button" class="toggle-btn" onclick="registerTransition()"> Register </button>
+                </div>
+
+                <form id="login" class="input-group">
+                    <input id = "Login" type="text" class="input-field" placeholder="Login" required>
+                    <input id = "Password" type="password" class="input-field" placeholder= "Password" required>
+                    <!-- <input type="checkbox" class="check-box"><span>Remember Password</span> -->
+                    <br><br>
+                    <button type="button" class="submit-btn" onclick="signIn()">Log in</button>
+                    <br> <br> <br> <br> <br>
+                    <span id="loginResult"></span>
+                </form>
+
+                <form id="register" class="input-group">
+                    <input id = "regLogin" type="text" class="input-field" placeholder="Login" required>
+                    <input id = "Email" type="text" class="input-field" placeholder="Email" required>
+                    <input id = "regPassword" type="password" class="input-field" placeholder="Password" required>
+                    <input id = "ConPassword"type="password" class="input-field" placeholder="Confirm Password" required>
+                    <br>
+
+                    <div class="dropdown">
+                        <button class="dropbtn">Select University</button>
+                        <select required class="dropdown-content" id="University" multiple>
+                            <option value="" disabled>Please select</option>
+                        </select>
+                    </div>
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <button type="button" class="submit-btn" onclick="signUp()">Sign Up</button>
+                    <br> <br> <br> <br> <br>
+                    <span id="registerResult"></span>
+                </form>
+
+            </div>
+        </div>
+
+        <script type="text/javascript" src="js/index.js"></script>
+
+        <script>
+            var x = document.getElementById("login");
+            var y = document.getElementById("register");
+            var z = document.getElementById("btn");
+
+            function registerTransition(){
+                x.style.left = "-400px";
+                y.style.left = "55px";
+                z.style.left = "110px";
+            }
+
+            function loginTransition(){
+                x.style.left = "55px";
+                y.style.left = "450px";
+                z.style.left = "0";
+            }
+        </script>
+    </body>
+
+</html>
+
